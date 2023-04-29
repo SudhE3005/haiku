@@ -1,26 +1,21 @@
 const User = require('../models/user.model');
 
-// Simple version of error handler function
 const handleError = (res, err) => {
   res.status(500).send({ message: err.message || 'An unknown error occurred.' });
 };
 
-// Create and save a new user
 exports.createUser = (req, res) => {
-  // Validate request
   if (!req.body.username || !req.body.password) {
     res.status(400).send({ message: 'Username and password are required.' });
     return;
   }
 
-  // Create user
   const user = new User({
     username: req.body.username,
     password: req.body.password,
     name: req.body.name,
   });
 
-  // Save user in the database
   user.save()
     .then(data => {
       res.send(data);
@@ -30,7 +25,6 @@ exports.createUser = (req, res) => {
     });
 };
 
-// Retrieve and return all users from the database
 exports.findAll = (req, res) => {
   console.log("hi")
   User.find()
@@ -42,7 +36,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single user with a userId
 exports.getUserById = (req, res) => {
   User.findById(req.params.userId)
     .then(user => {
@@ -57,9 +50,8 @@ exports.getUserById = (req, res) => {
     });
 };
 
-// Update a user identified by the userId in the request
 exports.updateUser = (req, res) => {
-  // Validate request
+
   if (!req.body.username || !req.body.password) {
     res.status(400).send({ message: 'Username and password are required.' });
     return;
@@ -82,7 +74,6 @@ exports.updateUser = (req, res) => {
     });
 };
 
-// Delete a user with the specified userId in the request
 exports.deleteUser = (req, res) => {
   User.findByIdAndRemove(req.params.userId)
     .then(user => {
