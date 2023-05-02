@@ -29,7 +29,7 @@ exports.findAll = (req, res) => {
   console.log("hi")
   User.find()
     .then(users => {
-      res.send(users);
+      res.json("hello");
     })
     .catch(err => {
       handleError(res, err);
@@ -39,6 +39,7 @@ exports.findAll = (req, res) => {
 exports.getUserById = (req, res) => {
   User.findById(req.params.userId)
     .then(user => {
+      console.log(req.params.userId)
       if (!user) {
         res.status(404).send({ message: 'User not found.' });
       } else {
