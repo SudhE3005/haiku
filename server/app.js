@@ -7,7 +7,10 @@ const session= require('express-session')
 const flash= require('connect-flash')
 const localstrategy= require('passport-local')
 const users = require('./models/user.model')
-// const config = require('./config/database');
+
+const userController = require('./controllers/user.controller');
+const haikuController = require('./controllers/haiku.controller');
+const commentController = require('./controllers/comment.controller');
 
 const app = express();
 
@@ -44,14 +47,39 @@ db.once('open',()=>{
     console.log('database connected')
 })
 
-const userRoutes = require('./routes/user.routes');
-const haikuRoutes = require('./routes/haiku.routes');
-const commentRoutes = require('./routes/comment.routes');
-app.use('/api/users', userRoutes);
-app.use('/api/haikus', haikuRoutes);
-app.use('/api/comments', commentRoutes);
-
 const port = 3000;
+
+app.get('/user', userController.findAll);
+
+app.get('/user/:id', userController.getUserById);
+
+app.post('/user/create', userController.createUser);
+
+app.put('/user/:id', userController.updateUser);
+
+app.delete('/user/:id', userController.deleteUser);
+
+app.get('/haiku/', haikuController.getAllHaikus);
+
+app.get('/haiku/:id', haikuController.getHaikuById);
+
+app.post('/haiku/', haikuController.createHaiku);
+
+app.put('/haiku/:id', haikuController.updateHaiku);
+
+app.delete('/haiku/:id', haikuController.deleteHaiku);
+
+app.post('/haiku/:id/vote', haikuController.upvoteHaiku);
+
+app.get('/haiku/user/:userId', haikuController.getHaikusByUserId);
+
+app.get('/comment/:id', commentController.getCommentById);
+
+app.post('/comment/', commentController.createComment);
+
+app.put('/comment/:id', commentController.updateComment);
+
+app.delete('/comment/:id', commentController.deleteComment);
 
 app.listen(port, () => {
   console.log('Server started on port ' + port);

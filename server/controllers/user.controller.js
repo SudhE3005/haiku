@@ -29,7 +29,7 @@ exports.findAll = (req, res) => {
   console.log("hi")
   User.find()
     .then(users => {
-      res.json("hello");
+      res.send(users);
     })
     .catch(err => {
       handleError(res, err);
@@ -52,7 +52,6 @@ exports.getUserById = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-
   if (!req.body.username || !req.body.password) {
     res.status(400).send({ message: 'Username and password are required.' });
     return;

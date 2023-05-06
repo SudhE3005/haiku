@@ -1,5 +1,7 @@
 
-# GET http://localhost:3000/users
+GET http://localhost:3000/haiku/1234
 
+# POST http://localhost:3000/
+# PUT http://localhost:3000/user/123
 
-POST http://localhost:3000/users
+# DELETE http://localhost:3000/user/123
